@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["algo"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.58.1/core/fmt/trait.Debug.html\" title=\"trait core::fmt::Debug\">Debug</a> for <a class=\"enum\" href=\"algo/enum.Quad.html\" title=\"enum algo::Quad\">Quad</a>","synthetic":false,"types":["algo::Quad"]},{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.58.1/core/fmt/trait.Debug.html\" title=\"trait core::fmt::Debug\">Debug</a> for <a class=\"struct\" href=\"algo/struct.UlamLocation.html\" title=\"struct algo::UlamLocation\">UlamLocation</a>","synthetic":false,"types":["algo::UlamLocation"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

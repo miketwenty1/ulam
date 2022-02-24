@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["algo"] = [{"text":"impl Freeze for <a class=\"enum\" href=\"algo/enum.Quad.html\" title=\"enum algo::Quad\">Quad</a>","synthetic":true,"types":["algo::Quad"]},{"text":"impl Freeze for <a class=\"struct\" href=\"algo/struct.UlamLocation.html\" title=\"struct algo::UlamLocation\">UlamLocation</a>","synthetic":true,"types":["algo::UlamLocation"]},{"text":"impl Freeze for <a class=\"struct\" href=\"algo/struct.Coord.html\" title=\"struct algo::Coord\">Coord</a>","synthetic":true,"types":["algo::Coord"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
