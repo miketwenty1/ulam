@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Quad",""]],"fn":[["get_ulam_deets",""],["quad_of_coord","Returns the quadrant given a Choordinate x. y."]],"struct":[["Coord",""],["UlamLocation",""]]});
