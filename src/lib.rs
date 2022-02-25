@@ -1,3 +1,5 @@
+/// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan. 
+/// Any 2 directional value like (NorthWest) will be on a perfect diagonal (ex: x: -8, y: 8).
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Quad {
     North,
@@ -32,14 +34,7 @@ impl Coord {
         }
     }    
 }
-/// Returns the quadrant given a Choordinate x. y.
-/// # Examples
-/// ```
-/// use ulam::{Coord, Quad};
-/// let c1 = Coord::new(0, 1);
-/// let result = ulam::get_ulam_deets(&c1);    
-/// assert_eq!(result.quad, Quad::North);
-/// ```
+
 fn quad_of_coord(c: &Coord) -> Quad {
     if c.x == 0 && c.y == 0 {
         Quad::Center
@@ -99,7 +94,14 @@ fn quad_of_coord(c: &Coord) -> Quad {
     }
 }
 
-
+    /// Get the value from the ulam spiral given a Quad and a Coord.
+    /// # Examples
+    /// ```
+    /// use ulam::{Coord, Quad};
+    /// let c1 = Coord::new(0, 1);
+    /// let result = ulam::get_ulam_deets(&c1);    
+    /// assert_eq!(result.quad, Quad::North);
+    /// ```
 pub fn value_of_coord(q: &Quad, c: &Coord) -> i32 {
     match q {
         // n = y c = -x
