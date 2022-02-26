@@ -1,4 +1,7 @@
-/// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan. 
+#[cfg(feature = "img")]
+pub mod image;
+
+/// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
 /// Any 2 directional value like (NorthWest) will be on a perfect diagonal (ex: x: -8, y: 8).
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum Quad {
@@ -28,29 +31,26 @@ pub struct Coord {
 
 impl Coord {
     pub fn new(x: i32, y: i32) -> Coord {
-        Coord {
-            x,
-            y,
-        }
-    }    
+        Coord { x, y }
+    }
 }
 
 fn quad_of_coord(c: &Coord) -> Quad {
     if c.x == 0 && c.y == 0 {
         Quad::Center
-    // Checking for Cartesian Q1 
+    // Checking for Cartesian Q1
     } else if c.x >= 0 && c.y >= 0 {
         // check for north shard
         if c.y > c.x {
             Quad::North
         // check for east shard
-        } else if c.x > c.y{
+        } else if c.x > c.y {
             Quad::East
         // check for diagonal
         } else {
             Quad::NorthEast
         }
-    // Checking for Cartesian Q2 
+    // Checking for Cartesian Q2
     } else if c.x <= 0 && c.y >= 0 {
         // check for north shard
         if c.y > c.x.abs() {
@@ -63,7 +63,7 @@ fn quad_of_coord(c: &Coord) -> Quad {
             Quad::NorthWest
         }
     }
-    // Checking for Cartesian Q3 
+    // Checking for Cartesian Q3
     else if c.x <= 0 && c.y <= 0 {
         // check for south shard
         if c.y.abs() > c.x.abs() {
@@ -88,52 +88,50 @@ fn quad_of_coord(c: &Coord) -> Quad {
         } else {
             Quad::SouthEast
         }
-    }
-    else {
+    } else {
         Quad::Center
     }
 }
 
-    /// Get the value from the ulam spiral given a Quad and a Coord.
-    /// # Examples
-    /// ```
-    /// use ulam::{Coord, Quad};
-    /// let c1 = Coord::new(0, 1);
-    /// let result = ulam::get_ulam_deets(&c1);    
-    /// assert_eq!(result.quad, Quad::North);
-    /// ```
+/// Get the value from the ulam spiral given a Quad and a Coord.
+/// # Examples
+/// ```
+/// use ulam::{Coord, Quad};
+/// let c1 = Coord::new(0, 1);
+/// let result = ulam::get_ulam_deets(&c1);    
+/// assert_eq!(result.quad, Quad::North);
+/// ```
 pub fn value_of_coord(q: &Quad, c: &Coord) -> i32 {
     match q {
         // n = y c = -x
         // 4n^2 - 1n + c
-        Quad::North => 4*(c.y*c.y)-c.y+(-c.x),
+        Quad::North => 4 * (c.y * c.y) - c.y + (-c.x),
         // n = x c = y
         // 4n^2 - 3n + c
-        Quad::East => 4*(c.x*c.x)-(3*c.x)+c.y,
+        Quad::East => 4 * (c.x * c.x) - (3 * c.x) + c.y,
         // n = -y c = x
         // 4n^2 + 3n + c
-        Quad::South => 4*(-c.y*-c.y)+(3*-c.y)+c.x,
+        Quad::South => 4 * (-c.y * -c.y) + (3 * -c.y) + c.x,
         // n = -x c = -y
         // 4n^2 + 1n + c
-        Quad::West => 4*(-c.x*-c.x)+(-c.x)+(-c.y),
+        Quad::West => 4 * (-c.x * -c.x) + (-c.x) + (-c.y),
         // 4n^2
-        Quad::NorthWest => 4*(c.x*c.x),
+        Quad::NorthWest => 4 * (c.x * c.x),
         // 4n*2 - 2n
-        Quad::NorthEast => 4*(c.x*c.x) - 2*c.x,
+        Quad::NorthEast => 4 * (c.x * c.x) - 2 * c.x,
         // 4n^2 + 2n // putting in abs to make this work
-        Quad::SouthWest => 4*(c.x*c.x) + 2*c.x.abs(),
+        Quad::SouthWest => 4 * (c.x * c.x) + 2 * c.x.abs(),
         // 4n^2 + 4n
-        Quad::SouthEast => 4*(c.x*c.x) + 4*c.x,
+        Quad::SouthEast => 4 * (c.x * c.x) + 4 * c.x,
         // middle
-        Quad::Center => 0
+        Quad::Center => 0,
     }
 }
 
 pub fn get_ulam_deets(c: &Coord) -> UlamPoint {
-
     let q = quad_of_coord(&c);
     let x = value_of_coord(&q, &c);
-    
+
     UlamPoint {
         value: x,
         coord: *c,
@@ -143,69 +141,69 @@ pub fn get_ulam_deets(c: &Coord) -> UlamPoint {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Coord, get_ulam_deets, Quad, value_of_coord };
+    use super::*;
 
     #[test]
     fn check_n() {
         let c1 = Coord::new(0, 1);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::North);
     }
     #[test]
     fn check_w() {
         let c1 = Coord::new(-1, 0);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::West);
     }
     #[test]
     fn check_s() {
         let c1 = Coord::new(0, -1);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::South);
     }
     #[test]
     fn check_e() {
         let c1 = Coord::new(1, 0);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::East);
     }
     #[test]
     fn check_ne() {
         let c1 = Coord::new(1, 1);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::NorthEast);
     }
     #[test]
     fn check_nw() {
         let c1 = Coord::new(-1, 1);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::NorthWest);
     }
     #[test]
     fn check_sw() {
         let c1 = Coord::new(-1, -1);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::SouthWest);
     }
     #[test]
     fn check_se() {
         let c1 = Coord::new(1, -1);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::SouthEast);
     }
     #[test]
     fn check_middle() {
         let c1 = Coord::new(0, 0);
         let result = get_ulam_deets(&c1);
-        
+
         assert_eq!(result.quad, Quad::Center);
     }
     ///
@@ -215,7 +213,7 @@ mod tests {
         let c1 = Coord::new(-9, 10);
         let p = get_ulam_deets(&c1);
         let result = value_of_coord(&p.quad, &c1);
-        assert_eq!(result, 399); 
+        assert_eq!(result, 399);
     }
     #[test]
     fn check_w_val() {
@@ -297,10 +295,6 @@ mod tests {
         assert_eq!(result, 3990755);
     }
 }
-
-
-
-
 
 // pub fn quad_of_coord(c: &Coord) -> Quad {
 //     match (c.x == c.y, c.x == -c.y, c.x > 0, c.y > 0) {
