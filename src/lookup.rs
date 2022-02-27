@@ -14,6 +14,7 @@ pub fn lookup(value: i32) -> Coord {
 
     let nw_root = get_ulam_deets(&Coord::new(-interim_val, interim_val));
     let se_root;
+    // needing only grab the decimal
     let ifdiff = ((value as f64) / 4.0).sqrt() - ((value as f64) / 4.0).sqrt().floor();
 
     // this is used to fix lookups on the south region.
