@@ -297,18 +297,3 @@ mod tests {
         assert_eq!(result, 3990755);
     }
 }
-
-// pub fn quad_of_coord(c: &Coord) -> Quad {
-//     match (c.x == c.y, c.x == -c.y, c.x > 0, c.y > 0) {
-//         (true, false, true, true) => Quad::NorthEast,
-//         (true, false, false, false) => Quad::SouthWest,
-//         (false, true, false, true) => Quad::NorthWest,
-//         (false, true, true, false) => Quad::SouthEast,
-//         _ => match (c.x > c.y, c.x > -c.y) {
-//             (true, true) => Quad::East,
-//             (false, false) => Quad::West,
-//             (false, true) => Quad::North,
-//             (true, false) => Quad::South
-//         }
-//     }
-// }
