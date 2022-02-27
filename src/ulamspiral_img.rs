@@ -1,4 +1,3 @@
-/// Get a simple image white pixel are primes.
 pub fn generate(x_size: u32, y_size: u32) -> image::ImageBuffer<image::Luma<u8>, Vec<u8>> {
     if x_size == 0 || y_size == 0 {
         return image::ImageBuffer::new(0, 0);
@@ -24,7 +23,6 @@ pub fn generate(x_size: u32, y_size: u32) -> image::ImageBuffer<image::Luma<u8>,
             }
         }
     }
-
     img
 }
 

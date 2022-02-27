@@ -1,5 +1,6 @@
 #[cfg(feature = "img")]
-pub mod image;
+pub mod ulamspiral_img;
+
 pub mod lookup;
 
 /// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
