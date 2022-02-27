@@ -21,7 +21,7 @@ pub fn generate(
             continue;
         }
         let pixel = image::Luma::from([255]);
-        img.put_pixel(u32::try_from(pos_x)? - 1, u32::try_from(pos_y)? - 1, pixel)
+        img.put_pixel(u32::try_from(pos_x)? - 1, u32::try_from(pos_y)? - 1, pixel);
     }
 
     Ok(img)
