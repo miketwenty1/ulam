@@ -1,5 +1,6 @@
 #[cfg(feature = "img")]
 pub mod image;
+pub mod lookup;
 
 /// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
 /// Any 2 directional value like (NorthWest) will be on a perfect diagonal (ex: x: -8, y: 8).
@@ -23,7 +24,7 @@ pub struct UlamPoint {
     pub quad: Quad,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Coord {
     x: i32,
     y: i32,

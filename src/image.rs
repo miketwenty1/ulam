@@ -1,5 +1,9 @@
+/// Get a simple image white pixel are primes.
 pub fn generate(x_size: u32, y_size: u32) -> image::ImageBuffer<image::Luma<u8>, Vec<u8>> {
-    assert!(x_size > 0 && y_size > 0, "inputs must be greater than 0");
+    if x_size == 0 || y_size == 0 {
+        return image::ImageBuffer::new(0, 0);
+    }
+    // assert!(x_size > 0 && y_size > 0, "inputs must be greater than 0");
 
     let mut img = image::ImageBuffer::new(x_size, y_size);
     let x_size = x_size as i32;
@@ -54,9 +58,10 @@ mod tests {
         assert_eq!(even, expected_even);
     }
     #[test]
-    #[should_panic]
     fn check_bad() {
-        generate(0, 1);
+        let bad = generate(0, 1);
+        let img = image::ImageBuffer::new(0, 0);
+        assert_eq!(bad, img);
     }
     #[test]
     fn check_rect() {
