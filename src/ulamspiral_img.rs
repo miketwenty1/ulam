@@ -10,12 +10,6 @@ pub fn generate(
 
     for prime in sieve.primes_from(0).take_while(|x| *x <= total) {
 
-
-        if prime < 2147395589 {
-            continue;
-        }
-
-
         let coord = crate::lookup::lookup(prime.try_into()?);
         let pos_x: i64 = i64::from(x_size) - i64::from(x_size) / 2 + i64::from(coord.x);
         let pos_y: i64 = (i64::from(y_size) / 2 - i64::from(coord.y)) + 1;
@@ -90,12 +84,5 @@ mod tests {
         expected_wide.put_pixel(1, 3, image::Luma::from([255 as u8]));
         expected_wide.put_pixel(2, 4, image::Luma::from([255 as u8]));
         assert_eq!(wide, expected_wide);
-    }
-    #[test]
-    fn temp_test() {
-        let img = generate(50_000, 50_000)
-            .unwrap()
-            .save("result.png")
-            .unwrap();
     }
 }
