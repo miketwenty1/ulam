@@ -19,7 +19,7 @@ pub fn lookup(value: i32) -> Coord {
 
     // this is used to fix lookups on the south region.
     // this will change the se_root to the right root value.
-    if ifdiff >= 0.0 && ifdiff < 0.5 {
+    if ifdiff < 0.5 {
         se_root = get_ulam_deets(&Coord::new(interim_val + 1, -interim_val));
     } else {
         se_root = get_ulam_deets(&Coord::new(interim_val, -interim_val + 1));
