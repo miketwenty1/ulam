@@ -1,7 +1,7 @@
 #[cfg(feature = "img")]
 pub mod ulamspiral_img;
 
-pub mod lookup;
+pub mod calc_coord;
 
 /// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
 /// Any 2 directional value like (NorthWest) will be on a perfect diagonal (ex: x: -8, y: 8).
