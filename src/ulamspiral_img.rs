@@ -7,6 +7,7 @@ pub fn generate(
     let mut img = image::ImageBuffer::new(x_size, y_size);
     let total = u64::from(cmp::max(x_size, y_size)).pow(2).try_into()?;
     let sieve = primal::Sieve::new(total);
+    let pixel = image::Luma::from([255]);
 
     for prime in sieve.primes_from(0).take_while(|x| *x <= total) {
         let coord = crate::lookup::lookup(prime.try_into()?);
@@ -20,7 +21,6 @@ pub fn generate(
             // A rectangle is being generated and this prime lies outside it.
             continue;
         }
-        let pixel = image::Luma::from([255]);
         img.put_pixel(u32::try_from(pos_x)? - 1, u32::try_from(pos_y)? - 1, pixel);
     }
 
