@@ -1,66 +1,39 @@
 /// Used to get an x,y coordinate given an integer on the ulam spiral.
-use crate::{get_ulam_deets, Coord};
+use crate::Coord;
 
-pub fn calc(value: i32) -> Coord {
-    if value < 0 {
-        let c = Coord::new(0, 0);
-        return c;
-    }
-    let x;
-    let y;
+pub fn calc(value: u32) -> Coord {
+    let x: i32;
+    let y: i32;
 
-    // divide value by 4, get the sqrt, then round to closest integer.
-    let interim_val = ((value as f64) / 4.0).sqrt().round() as i32; // doesn't work for south quad numbers
+    let n: i32 = (value as f64).sqrt().floor() as i32;
+    let diff: i32 = value as i32 - (n * n);
 
-    let nw_root = get_ulam_deets(&Coord::new(-interim_val, interim_val));
-    let se_root;
-    // needing only grab the decimal
-    let ifdiff = ((value as f64) / 4.0).sqrt() - ((value as f64) / 4.0).sqrt().floor();
-
-    // this is used to fix calcs on the south region.
-    // this will change the se_root to the right root value.
-    if ifdiff < 0.5 {
-        se_root = get_ulam_deets(&Coord::new(interim_val + 1, -interim_val));
-    } else {
-        se_root = get_ulam_deets(&Coord::new(interim_val, -interim_val + 1));
-    }
-
-    let nw_diff = nw_root.value - value;
-    let se_diff = se_root.value - value;
-    // we will assume the value is closer and inline with the NW root
-    if se_diff.abs() > nw_diff.abs() {
-        // check if nw_diff is positive or negative
-        if nw_diff >= 0 {
-            x = nw_root.coord.x + nw_diff;
-            y = nw_root.coord.y;
+    if n % 2 == 1 {
+        // odd n arm
+        if diff < n {
+            x = (n + 1) / 2;
+            y = ((1 - n) / 2) + diff;
         } else {
-            x = nw_root.coord.x;
-            y = nw_root.coord.y + nw_diff;
+            x = (3 * n + 1) / 2 - diff;
+            y = (n + 1) / 2;
         }
-    // we will assume the value is closer and inline with the SE root
     } else {
-        // check if se_diff is positive or negative
-        if se_diff >= 0 {
-            x = se_root.coord.x - se_diff;
-            y = se_root.coord.y;
+        // even n arm
+        if diff < n {
+            x = -n / 2;
+            y = n / 2 - diff;
         } else {
-            x = se_root.coord.x;
-            y = se_root.coord.y - se_diff;
+            x = ((-3 * n) / 2) + diff;
+            y = -n / 2;
         }
     }
-    Coord::new(x, y)
+    return Coord { x: x, y: y };
 }
 
 #[cfg(test)]
 mod tests {
     use super::{calc, Coord};
 
-    #[test]
-    fn check_bad() {
-        let result = calc(-1);
-        let c = Coord::new(0, 0);
-        assert_eq!(result, c);
-    }
     #[test]
     fn check_small_0() {
         let result = calc(0);

@@ -4,7 +4,7 @@ pub type GreyImage = image::GrayImage; // because ben is british
 
 pub fn generate(x_size: u32, y_size: u32) -> Result<GreyImage, Box<dyn Error>> {
     let mut img = image::ImageBuffer::new(x_size, y_size);
-    let total = u64::from(cmp::max(x_size, y_size)).pow(2).try_into()?;
+    let total = u32::from(cmp::max(x_size, y_size)).pow(2).try_into()?;
     let sieve = primal::Sieve::new(total);
     let pixel = image::Luma::from([255]);
 
@@ -36,7 +36,7 @@ pub fn generate_colour(
     y_size: u32,
 ) -> Result<image::RgbImage, Box<dyn Error>> {
     let mut img = image::RgbImage::new(x_size, y_size);
-    let total = u64::from(cmp::max(x_size, y_size)).pow(2).try_into()?;
+    let total = u32::from(cmp::max(x_size, y_size)).pow(2).try_into()?;
     let sieve = primal::Sieve::new(total);
 
     for prime in sieve.primes_from(0).take_while(|x| *x <= total) {

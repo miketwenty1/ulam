@@ -20,7 +20,7 @@ pub enum Quad {
 
 #[derive(Debug, Clone, Copy)]
 pub struct UlamPoint {
-    pub value: i32,
+    pub value: u32,
     pub coord: Coord,
     pub quad: Quad,
 }
@@ -103,28 +103,28 @@ fn quad_of_coord(c: &Coord) -> Quad {
 /// let result = ulam::get_ulam_deets(&c1);    
 /// assert_eq!(result.quad, Quad::North);
 /// ```
-pub fn value_of_coord(q: &Quad, c: &Coord) -> i32 {
+pub fn value_of_coord(q: &Quad, c: &Coord) -> u32 {
     match q {
         // n = y c = -x
         // 4n^2 - 1n + c
-        Quad::North => 4 * (c.y * c.y) - c.y + (-c.x),
+        Quad::North => (4 * (c.y * c.y) - c.y + (-c.x)).try_into().unwrap(),
         // n = x c = y
         // 4n^2 - 3n + c
-        Quad::East => 4 * (c.x * c.x) - (3 * c.x) + c.y,
+        Quad::East => (4 * (c.x * c.x) - (3 * c.x) + c.y).try_into().unwrap(),
         // n = -y c = x
         // 4n^2 + 3n + c
-        Quad::South => 4 * (-c.y * -c.y) + (3 * -c.y) + c.x,
+        Quad::South => (4 * (-c.y * -c.y) + (3 * -c.y) + c.x) as u32,
         // n = -x c = -y
         // 4n^2 + 1n + c
-        Quad::West => 4 * (-c.x * -c.x) + (-c.x) + (-c.y),
+        Quad::West => (4 * (-c.x * -c.x) + (-c.x) + (-c.y)) as u32,
         // 4n^2
-        Quad::NorthWest => 4 * (c.x * c.x),
+        Quad::NorthWest => (4 * (c.x * c.x)) as u32,
         // 4n*2 - 2n
-        Quad::NorthEast => 4 * (c.x * c.x) - 2 * c.x,
+        Quad::NorthEast => (4 * (c.x * c.x) - 2 * c.x) as u32,
         // 4n^2 + 2n // putting in abs to make this work
-        Quad::SouthWest => 4 * (c.x * c.x) + 2 * c.x.abs(),
+        Quad::SouthWest => (4 * (c.x * c.x) + 2 * c.x.abs()) as u32,
         // 4n^2 + 4n
-        Quad::SouthEast => 4 * (c.x * c.x) + 4 * c.x,
+        Quad::SouthEast => (4 * (c.x * c.x) + 4 * c.x) as u32,
         // middle
         Quad::Center => 0,
     }
@@ -138,6 +138,7 @@ pub fn get_ulam_deets(c: &Coord) -> UlamPoint {
         value: x,
         coord: *c,
         quad: q,
+        // is_prime: bool
     }
 }
 
