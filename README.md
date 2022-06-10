@@ -1,6 +1,20 @@
-# ulam ftw 
-takes a Coord( x, y )
+# ulam crate
+### ulam spiral lib for rust.
 
+- Takes a Coord( x, y ) and returns a value in the spiral.
+- Takes a value and returns a Coord(x,y).
+- Can also be used to produce pictures of ulam spirals with primes colored.
+## Important Notes
+- this current starts with 0 in the middle and starts to the right.
+```rust
+Coord {
+    x: 1,
+    y: 0,
+}
+```
+This would equal the value of 1.
+
+## Example usage:
 ```rust
     let mut ulam_points = HashMap::new();
 
@@ -24,7 +38,7 @@ takes a Coord( x, y )
     let a = ulam::get_ulam_deets(&c);
 
     println!("{}", a.value);
-    // println!("{:?}", ulam_points[&55]);
+    println!("{:?}", ulam_points[&55]);
 
 
 
