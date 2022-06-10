@@ -12,7 +12,7 @@ Coord {
     y: 0,
 }
 ```
-This would equal the value of 1.
+This Coord is equal the value of 1 if passed to the 
 
 ## Example usage:
 ```rust
@@ -24,7 +24,7 @@ This would equal the value of 1.
         }
         for y in -201..201 {
             let c = Coord::new(x, y);
-            let a = ulam::get_ulam_deets(&c);
+            let a = ulam::get_ulam_point(&c);
 
             ulam_points.insert(
                 a.value,
@@ -35,7 +35,7 @@ This would equal the value of 1.
 
 
     let c = Coord::new(20000, 20000);
-    let a = ulam::get_ulam_deets(&c);
+    let a = ulam::get_ulam_point(&c);
 
     println!("{}", a.value);
     println!("{:?}", ulam_points[&55]);

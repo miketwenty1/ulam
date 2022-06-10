@@ -2,6 +2,7 @@
 pub mod ulamspiral_img;
 
 pub mod calc_coord;
+pub mod prime;
 
 /// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
 /// Any 2 directional value like (NorthWest) will be on a perfect diagonal (ex: x: -8, y: 8).
@@ -21,8 +22,8 @@ pub enum Quad {
 #[derive(Debug, Clone, Copy)]
 pub struct UlamPoint {
     pub value: u32,
-    pub coord: Coord,
     pub quad: Quad,
+    pub is_prime: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -100,7 +101,7 @@ fn quad_of_coord(c: &Coord) -> Quad {
 /// ```
 /// use ulam::{Coord, Quad};
 /// let c1 = Coord::new(0, 1);
-/// let result = ulam::get_ulam_deets(&c1);    
+/// let result = ulam::get_ulam_point(&c1);    
 /// assert_eq!(result.quad, Quad::North);
 /// ```
 pub fn value_of_coord(q: &Quad, c: &Coord) -> u32 {
@@ -130,15 +131,14 @@ pub fn value_of_coord(q: &Quad, c: &Coord) -> u32 {
     }
 }
 
-pub fn get_ulam_deets(c: &Coord) -> UlamPoint {
+pub fn get_ulam_point(c: &Coord) -> UlamPoint {
     let q = quad_of_coord(&c);
     let x = value_of_coord(&q, &c);
 
     UlamPoint {
         value: x,
-        coord: *c,
         quad: q,
-        // is_prime: bool
+        is_prime: prime::is_prime(x),
     }
 }
 
@@ -149,63 +149,63 @@ mod tests {
     #[test]
     fn check_n() {
         let c1 = Coord::new(0, 1);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::North);
     }
     #[test]
     fn check_w() {
         let c1 = Coord::new(-1, 0);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::West);
     }
     #[test]
     fn check_s() {
         let c1 = Coord::new(0, -1);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::South);
     }
     #[test]
     fn check_e() {
         let c1 = Coord::new(1, 0);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::East);
     }
     #[test]
     fn check_ne() {
         let c1 = Coord::new(1, 1);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::NorthEast);
     }
     #[test]
     fn check_nw() {
         let c1 = Coord::new(-1, 1);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::NorthWest);
     }
     #[test]
     fn check_sw() {
         let c1 = Coord::new(-1, -1);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::SouthWest);
     }
     #[test]
     fn check_se() {
         let c1 = Coord::new(1, -1);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::SouthEast);
     }
     #[test]
     fn check_middle() {
         let c1 = Coord::new(0, 0);
-        let result = get_ulam_deets(&c1);
+        let result = get_ulam_point(&c1);
 
         assert_eq!(result.quad, Quad::Center);
     }
@@ -214,35 +214,35 @@ mod tests {
     #[test]
     fn check_n_val() {
         let c1 = Coord::new(-9, 10);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 399);
     }
     #[test]
     fn check_w_val() {
         let c1 = Coord::new(-6, -3);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 153);
     }
     #[test]
     fn check_e_val() {
         let c1 = Coord::new(8, -2);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 230);
     }
     #[test]
     fn check_s_val() {
         let c1 = Coord::new(0, -2);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 22);
     }
     #[test]
     fn check_se_val() {
         let c1 = Coord::new(9, -9);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         dbg!(result);
         assert_eq!(result, 360);
@@ -250,28 +250,28 @@ mod tests {
     #[test]
     fn check_ne_val() {
         let c1 = Coord::new(2, 2);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 12);
     }
     #[test]
     fn check_nw_val() {
         let c1 = Coord::new(-3, 3);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 36);
     }
     #[test]
     fn check_sw_val() {
         let c1 = Coord::new(-9, -9);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 342);
     }
     #[test]
     fn check_e_val_big() {
         let c1 = Coord::new(400, -221);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         dbg!(result);
         assert_eq!(result, 638579);
@@ -279,21 +279,21 @@ mod tests {
     #[test]
     fn check_w_val_big() {
         let c1 = Coord::new(-398, -129);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 634143);
     }
     #[test]
     fn check_s_val_big() {
         let c1 = Coord::new(-397, -996);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 3970655);
     }
     #[test]
     fn check_n_val_big() {
         let c1 = Coord::new(250, 999);
-        let p = get_ulam_deets(&c1);
+        let p = get_ulam_point(&c1);
         let result = value_of_coord(&p.quad, &c1);
         assert_eq!(result, 3990755);
     }
