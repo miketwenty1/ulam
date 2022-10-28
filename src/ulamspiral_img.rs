@@ -103,7 +103,7 @@ mod tests {
     #[test]
     #[ignore]
     fn try_generate() {
-        generate_colour(2_000, 2_000)
+        generate_colour(1_000, 1_000)
             .unwrap()
             .save("./result.png")
             .unwrap();
