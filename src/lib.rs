@@ -104,7 +104,8 @@ fn quad_of_coord(c: &Coord) -> Quad {
 /// let result = ulam::get_ulam_point(&c1);    
 /// assert_eq!(result.quad, Quad::North);
 /// ```
-pub fn value_of_coord(q: &Quad, c: &Coord) -> u32 {
+pub fn value_of_coord(c: &Coord) -> u32 {
+    let q = quad_of_coord(c);
     match q {
         // n = y c = -x
         // 4n^2 - 1n + c
@@ -133,7 +134,7 @@ pub fn value_of_coord(q: &Quad, c: &Coord) -> u32 {
 
 pub fn get_ulam_point(c: &Coord) -> UlamPoint {
     let q = quad_of_coord(c);
-    let x = value_of_coord(&q, c);
+    let x = value_of_coord(c);
 
     UlamPoint {
         value: x,
@@ -214,87 +215,86 @@ mod tests {
     #[test]
     fn check_n_val() {
         let c1 = Coord::new(-9, 10);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 399);
     }
     #[test]
     fn check_w_val() {
         let c1 = Coord::new(-6, -3);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 153);
     }
     #[test]
     fn check_e_val() {
         let c1 = Coord::new(8, -2);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+        let result = value_of_coord(&c1);
         assert_eq!(result, 230);
     }
     #[test]
     fn check_s_val() {
         let c1 = Coord::new(0, -2);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 22);
     }
     #[test]
     fn check_se_val() {
         let c1 = Coord::new(9, -9);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         dbg!(result);
         assert_eq!(result, 360);
     }
     #[test]
     fn check_ne_val() {
         let c1 = Coord::new(2, 2);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 12);
     }
     #[test]
     fn check_nw_val() {
         let c1 = Coord::new(-3, 3);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 36);
     }
     #[test]
     fn check_sw_val() {
         let c1 = Coord::new(-9, -9);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 342);
     }
     #[test]
     fn check_e_val_big() {
         let c1 = Coord::new(400, -221);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         dbg!(result);
         assert_eq!(result, 638579);
     }
     #[test]
     fn check_w_val_big() {
         let c1 = Coord::new(-398, -129);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 634143);
     }
     #[test]
     fn check_s_val_big() {
         let c1 = Coord::new(-397, -996);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 3970655);
     }
     #[test]
     fn check_n_val_big() {
         let c1 = Coord::new(250, 999);
-        let p = get_ulam_point(&c1);
-        let result = value_of_coord(&p.quad, &c1);
+
+        let result = value_of_coord(&c1);
         assert_eq!(result, 3990755);
     }
 }
