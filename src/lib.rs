@@ -6,7 +6,7 @@ pub mod prime;
 
 /// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
 /// Any 2 directional value like (NorthWest) will be on a perfect diagonal (ex: x: -8, y: 8).
-#[derive(Debug, PartialEq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Quad {
     North,
     NorthEast,
@@ -132,8 +132,8 @@ pub fn value_of_coord(q: &Quad, c: &Coord) -> u32 {
 }
 
 pub fn get_ulam_point(c: &Coord) -> UlamPoint {
-    let q = quad_of_coord(&c);
-    let x = value_of_coord(&q, &c);
+    let q = quad_of_coord(c);
+    let x = value_of_coord(&q, c);
 
     UlamPoint {
         value: x,

@@ -27,7 +27,7 @@ pub fn calc(value: u32) -> Coord {
             y = -n / 2;
         }
     }
-    return Coord { x: x, y: y };
+    Coord { x, y }
 }
 
 #[cfg(test)]
