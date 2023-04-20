@@ -4,9 +4,11 @@ pub mod ulamspiral_img;
 pub mod calc_coord;
 pub mod prime;
 
+use serde::{Deserialize, Serialize};
+
 /// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
 /// Any 2 directional value like (NorthWest) will be on a perfect diagonal (ex: x: -8, y: 8).
-#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize, Deserialize)]
 pub enum Quad {
     North,
     NorthEast,
@@ -19,14 +21,14 @@ pub enum Quad {
     Center,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub struct UlamPoint {
     pub value: u32,
     pub quad: Quad,
     pub is_prime: bool,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Coord {
     pub x: i32,
     pub y: i32,
@@ -38,6 +40,7 @@ impl Coord {
     }
 }
 
+#[allow(clippy::comparison_chain)]
 fn quad_of_coord(c: &Coord) -> Quad {
     if c.x == 0 && c.y == 0 {
         Quad::Center
