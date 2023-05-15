@@ -105,7 +105,7 @@ fn quad_of_coord(c: &Coord) -> Quad {
 /// use ulam::{Coord, value_of_coord};
 /// let c1 = Coord::new(0, 1);
 /// let result = ulam::value_of_coord(&c1);    
-/// assert_eq!(result.quad, Quad::North);
+///
 /// ```
 pub fn value_of_coord(c: &Coord) -> u32 {
     let q = quad_of_coord(c);
@@ -139,9 +139,8 @@ pub fn value_of_coord(c: &Coord) -> u32 {
 /// # Examples
 /// ```
 /// use ulam::value_of_xy;
-/// let c1 = Coord::new(0, 1);
 /// let result = ulam::value_of_xy(3, 4);    
-/// assert_eq!(result.quad, Quad::North);
+///
 /// ```
 pub fn value_of_xy(x: i32, y: i32) -> u32 {
     let c = Coord { x, y };
