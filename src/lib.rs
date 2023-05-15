@@ -102,13 +102,50 @@ fn quad_of_coord(c: &Coord) -> Quad {
 /// Get the value from the ulam spiral given a Quad and a Coord.
 /// # Examples
 /// ```
-/// use ulam::{Coord, Quad};
+/// use ulam::{Coord, value_of_coord};
 /// let c1 = Coord::new(0, 1);
-/// let result = ulam::get_ulam_point(&c1);    
+/// let result = ulam::value_of_coord(&c1);    
 /// assert_eq!(result.quad, Quad::North);
 /// ```
 pub fn value_of_coord(c: &Coord) -> u32 {
     let q = quad_of_coord(c);
+    match q {
+        // n = y c = -x
+        // 4n^2 - 1n + c
+        Quad::North => (4 * (c.y * c.y) - c.y + (-c.x)).try_into().unwrap(),
+        // n = x c = y
+        // 4n^2 - 3n + c
+        Quad::East => (4 * (c.x * c.x) - (3 * c.x) + c.y).try_into().unwrap(),
+        // n = -y c = x
+        // 4n^2 + 3n + c
+        Quad::South => (4 * (-c.y * -c.y) + (3 * -c.y) + c.x) as u32,
+        // n = -x c = -y
+        // 4n^2 + 1n + c
+        Quad::West => (4 * (-c.x * -c.x) + (-c.x) + (-c.y)) as u32,
+        // 4n^2
+        Quad::NorthWest => (4 * (c.x * c.x)) as u32,
+        // 4n*2 - 2n
+        Quad::NorthEast => (4 * (c.x * c.x) - 2 * c.x) as u32,
+        // 4n^2 + 2n // putting in abs to make this work
+        Quad::SouthWest => (4 * (c.x * c.x) + 2 * c.x.abs()) as u32,
+        // 4n^2 + 4n
+        Quad::SouthEast => (4 * (c.x * c.x) + 4 * c.x) as u32,
+        // middle
+        Quad::Center => 0,
+    }
+}
+
+/// Get the value from the ulam spiral given a Quad and a Coord.
+/// # Examples
+/// ```
+/// use ulam::value_of_xy;
+/// let c1 = Coord::new(0, 1);
+/// let result = ulam::value_of_xy(3, 4);    
+/// assert_eq!(result.quad, Quad::North);
+/// ```
+pub fn value_of_xy(x: i32, y: i32) -> u32 {
+    let c = Coord { x, y };
+    let q = quad_of_coord(&c);
     match q {
         // n = y c = -x
         // 4n^2 - 1n + c

@@ -9,7 +9,7 @@ pub fn generate(x_size: u32, y_size: u32) -> Result<GreyImage, Box<dyn Error>> {
     let pixel = image::Luma::from([255]);
 
     for prime in sieve.primes_from(0).take_while(|x| *x <= total) {
-        let coord = crate::calc_coord::calc(prime.try_into()?);
+        let coord = crate::calc_coord::calc_coord(prime.try_into()?);
         let pos_x: i64 = i64::from(x_size) - i64::from(x_size) / 2 + i64::from(coord.x);
         let pos_y: i64 = i64::from(y_size) / 2 - i64::from(coord.y) + 1;
         if pos_x < 1
@@ -40,7 +40,7 @@ pub fn generate_colour(
     let sieve = primal::Sieve::new(total);
 
     for prime in sieve.primes_from(0).take_while(|x| *x <= total) {
-        let coord = crate::calc_coord::calc(prime.try_into()?);
+        let coord = crate::calc_coord::calc_coord(prime.try_into()?);
         let pos_x: i64 = i64::from(x_size) - i64::from(x_size) / 2 + i64::from(coord.x);
         let pos_y: i64 = i64::from(y_size) / 2 - i64::from(coord.y) + 1;
         if pos_x < 1
