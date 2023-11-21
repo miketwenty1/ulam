@@ -1,8 +1,10 @@
 #[cfg(feature = "img")]
 pub mod ulamspiral_img;
+#[cfg(feature = "prime")]
+pub mod prime;
 
 pub mod calc_coord;
-pub mod prime;
+
 
 use serde::{Deserialize, Serialize};
 
@@ -171,84 +173,9 @@ pub fn value_of_xy(x: i32, y: i32) -> u32 {
     }
 }
 
-pub fn get_ulam_point(c: &Coord) -> UlamPoint {
-    let q = quad_of_coord(c);
-    let x = value_of_coord(c);
-
-    UlamPoint {
-        value: x,
-        quad: q,
-        is_prime: prime::is_prime(x),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn check_n() {
-        let c1 = Coord::new(0, 1);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::North);
-    }
-    #[test]
-    fn check_w() {
-        let c1 = Coord::new(-1, 0);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::West);
-    }
-    #[test]
-    fn check_s() {
-        let c1 = Coord::new(0, -1);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::South);
-    }
-    #[test]
-    fn check_e() {
-        let c1 = Coord::new(1, 0);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::East);
-    }
-    #[test]
-    fn check_ne() {
-        let c1 = Coord::new(1, 1);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::NorthEast);
-    }
-    #[test]
-    fn check_nw() {
-        let c1 = Coord::new(-1, 1);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::NorthWest);
-    }
-    #[test]
-    fn check_sw() {
-        let c1 = Coord::new(-1, -1);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::SouthWest);
-    }
-    #[test]
-    fn check_se() {
-        let c1 = Coord::new(1, -1);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::SouthEast);
-    }
-    #[test]
-    fn check_middle() {
-        let c1 = Coord::new(0, 0);
-        let result = get_ulam_point(&c1);
-
-        assert_eq!(result.quad, Quad::Center);
-    }
     ///
     // value_of_coord tests
     #[test]
