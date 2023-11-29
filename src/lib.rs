@@ -1,10 +1,9 @@
-#[cfg(feature = "img")]
-pub mod ulamspiral_img;
 #[cfg(feature = "prime")]
 pub mod prime;
+#[cfg(feature = "img")]
+pub mod ulamspiral_img;
 
 pub mod calc_coord;
-
 
 use serde::{Deserialize, Serialize};
 
@@ -43,7 +42,7 @@ impl Coord {
 }
 
 #[allow(clippy::comparison_chain)]
-fn quad_of_coord(c: &Coord) -> Quad {
+pub fn quad_of_coord(c: &Coord) -> Quad {
     if c.x == 0 && c.y == 0 {
         Quad::Center
     // Checking for Cartesian Q1
@@ -171,6 +170,11 @@ pub fn value_of_xy(x: i32, y: i32) -> u32 {
         // middle
         Quad::Center => 0,
     }
+}
+
+pub fn quad_of_xy(x: i32, y: i32) -> Quad {
+    let c = Coord { x, y };
+    quad_of_coord(&c)
 }
 
 #[cfg(test)]
