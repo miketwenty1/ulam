@@ -5,6 +5,7 @@ pub mod ulamspiral_img;
 
 pub mod calc_coord;
 
+use crate::calc_coord::calc_coord;
 use serde::{Deserialize, Serialize};
 
 /// A quadrant that is useful in knowing where the x,y coordinate exist in a cartisan plan.
@@ -175,6 +176,10 @@ pub fn value_of_xy(x: i32, y: i32) -> u32 {
 pub fn quad_of_xy(x: i32, y: i32) -> Quad {
     let c = Coord { x, y };
     quad_of_coord(&c)
+}
+
+pub fn quad_of_value(v: u32) -> Quad {
+    quad_of_coord(&calc_coord(v))
 }
 
 #[cfg(test)]
