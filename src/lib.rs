@@ -140,11 +140,11 @@ pub fn value_of_coord(c: &Coord) -> u32 {
 /// Get the value from the ulam spiral given a Quad and a Coord.
 /// # Examples
 /// ```
-/// use ulam::value_of_xy;
-/// let result = ulam::value_of_xy(3, 4);    
+/// use ulam::get_value_from_xy;
+/// let result = ulam::get_value_from_xy(3, 4);    
 ///
 /// ```
-pub fn value_of_xy(x: i32, y: i32) -> u32 {
+pub fn get_value_from_xy(x: i32, y: i32) -> u32 {
     let c = Coord { x, y };
     let q = quad_of_coord(&c);
     match q {
@@ -171,6 +171,42 @@ pub fn value_of_xy(x: i32, y: i32) -> u32 {
         // middle
         Quad::Center => 0,
     }
+}
+
+/// Get the value from the ulam spiral given a Quad and a Coord.
+/// # Examples
+/// ```
+/// use ulam::get_xy_from_value;
+/// let result = ulam::get_xy_from_value(9);    
+///
+/// ```
+pub fn get_xy_from_value(v: u32) -> (i32, i32) {
+    let x: i32;
+    let y: i32;
+
+    let n: i32 = (v as f64).sqrt().floor() as i32;
+    let diff: i32 = v as i32 - (n * n);
+
+    if n % 2 == 1 {
+        // odd n arm
+        if diff < n {
+            x = (n + 1) / 2;
+            y = ((1 - n) / 2) + diff;
+        } else {
+            x = (3 * n + 1) / 2 - diff;
+            y = (n + 1) / 2;
+        }
+    } else {
+        // even n arm
+        if diff < n {
+            x = -n / 2;
+            y = n / 2 - diff;
+        } else {
+            x = ((-3 * n) / 2) + diff;
+            y = -n / 2;
+        }
+    }
+    (x, y)
 }
 
 pub fn quad_of_xy(x: i32, y: i32) -> Quad {
