@@ -114,10 +114,10 @@ pub fn value_of_coord(c: &Coord) -> u32 {
     match q {
         // n = y c = -x
         // 4n^2 - 1n + c
-        Quad::North => (4 * (c.y * c.y) - c.y + (-c.x)).try_into().unwrap(),
+        Quad::North => (4 * (c.y * c.y) - c.y + (-c.x)) as u32,
         // n = x c = y
         // 4n^2 - 3n + c
-        Quad::East => (4 * (c.x * c.x) - (3 * c.x) + c.y).try_into().unwrap(),
+        Quad::East => (4 * (c.x * c.x) - (3 * c.x) + c.y) as u32,
         // n = -y c = x
         // 4n^2 + 3n + c
         Quad::South => (4 * (-c.y * -c.y) + (3 * -c.y) + c.x) as u32,
@@ -150,10 +150,10 @@ pub fn get_value_from_xy(x: i32, y: i32) -> u32 {
     match q {
         // n = y c = -x
         // 4n^2 - 1n + c
-        Quad::North => (4 * (c.y * c.y) - c.y + (-c.x)).try_into().unwrap(),
+        Quad::North => (4 * (c.y * c.y) - c.y + (-c.x)) as u32,
         // n = x c = y
         // 4n^2 - 3n + c
-        Quad::East => (4 * (c.x * c.x) - (3 * c.x) + c.y).try_into().unwrap(),
+        Quad::East => (4 * (c.x * c.x) - (3 * c.x) + c.y) as u32,
         // n = -y c = x
         // 4n^2 + 3n + c
         Quad::South => (4 * (-c.y * -c.y) + (3 * -c.y) + c.x) as u32,
